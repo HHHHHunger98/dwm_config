@@ -1,0 +1,45 @@
+--- x.c
++++ x.c
+@@ -139,6 +139,9 @@ static void xdrawglyphfontspecs(const XftGlyphFontSpec *, Glyph, int, int, int);
+ static void xdrawglyph(Glyph, int, int);
+ static void xclear(int, int, int, int);
+ static int xgeommasktogravity(int);
++static void ximopen(Display *);
++static void ximinstantiate(Display *, XPointer, XPointer);
++static void ximdestroy(XIM, XPointer, XPointer);
+ static void xinit(int, int);
+ static void cresize(int, int);
+ static void xresize(int, int);
+@@ -1073,7 +1116,7 @@ xinit(int cols, int rows)
+ 	xw.attrs.background_pixel = dc.col[defaultbg].pixel;
+ 	xw.attrs.border_pixel = dc.col[defaultbg].pixel;
+ 	xw.attrs.bit_gravity = NorthWestGravity;
+-	xw.attrs.event_mask = FocusChangeMask | KeyPressMask
++	xw.attrs.event_mask = FocusChangeMask | KeyPressMask | KeyReleaseMask
+ 		| ExposureMask | VisibilityChangeMask | StructureNotifyMask
+ 		| ButtonMotionMask | ButtonPressMask | ButtonReleaseMask;
+ 	xw.attrs.colormap = xw.cmap;
+@@ -1101,22 +1144,7 @@ xinit(int cols, int rows)
+ 	xw.draw = XftDrawCreate(xw.dpy, xw.buf, xw.vis, xw.cmap);
+ 
+ 	/* input methods */
+-	if ((xw.xim = XOpenIM(xw.dpy, NULL, NULL, NULL)) == NULL) {
+-		XSetLocaleModifiers("@im=local");
+-		if ((xw.xim =  XOpenIM(xw.dpy, NULL, NULL, NULL)) == NULL) {
+-			XSetLocaleModifiers("@im=");
+-			if ((xw.xim = XOpenIM(xw.dpy,
+-					NULL, NULL, NULL)) == NULL) {
+-				die("XOpenIM failed. Could not open input"
+-					" device.\n");
+-			}
+-		}
+-	}
+-	xw.xic = XCreateIC(xw.xim, XNInputStyle, XIMPreeditNothing
+-					   | XIMStatusNothing, XNClientWindow, xw.win,
+-					   XNFocusWindow, xw.win, NULL);
+-	if (xw.xic == NULL)
+-		die("XCreateIC failed. Could not obtain input method.\n");
++	ximopen(xw.dpy);
+ 
+ 	/* white cursor, black outline */
+ 	cursor = XCreateFontCursor(xw.dpy, mouseshape);
