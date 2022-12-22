@@ -9,6 +9,7 @@
 static const unsigned int borderpx  = 5;        /* border pixel of windows */
 static const unsigned int snap      = 40;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
+static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 10};
 static const int topbar             = 0;        /* 0 means bottom bar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font Mono:size=16" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font Mono:size=16";
