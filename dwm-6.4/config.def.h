@@ -1,3 +1,6 @@
+/* Support a list of multimedia key symbols defined in XF86keysym.h in the Xorg source code. */ 
+#include <X11/XF86keysym.h>
+
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
