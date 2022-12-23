@@ -73,14 +73,14 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = {"st", NULL }; 
 static const char *browsercmd[]  = { "firefox", NULL };
 static const char *filesyscmd[]  = { "thunar", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd} },
 	{ MODKEY|ShiftMask,		XK_f,	   spawn,	   {.v = filesyscmd} },
 	{ MODKEY,			XK_b,	   spawn,	   {.v = browsercmd } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
