@@ -76,13 +76,17 @@ static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray
 static const char *termcmd[]  = {"st", NULL }; 
 static const char *browsercmd[]  = { "firefox", NULL };
 static const char *filesyscmd[]  = { "thunar", NULL };
+/* commands: volume setting using amixer */
+static const char *upvol[] = { "amixer", "-D", "default", "sset", "Master", "Playback", "5%+", NULL };
+static const char *downvol[] = { "amixer", "-D", "default", "sset", "Master", "Playback", "5%-", NULL };
+static const char *mutevol[] = { "amixer", "-D", "default", "sset", "Master", "Playback", "toggle", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd} },
-	{ MODKEY|ShiftMask,		XK_f,	   spawn,	   {.v = filesyscmd} },
-	{ MODKEY,			XK_b,	   spawn,	   {.v = browsercmd } },
+	{ MODKEY,	                    XK_Return, spawn,          {.v = termcmd} },
+	{ MODKEY|ShiftMask,	            XK_f,	   spawn,	       {.v = filesyscmd} },
+	{ MODKEY,			            XK_b,	   spawn,	       {.v = browsercmd } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -90,13 +94,13 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,                       XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,			XK_g,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,			            XK_g,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -119,7 +123,10 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} },
+    { 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = downvol } },
+	{ 0,                            XF86XK_AudioMute,     spawn,          {.v = mutevol } },
+	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = upvol   } },
 };
 
 /* button definitions */
