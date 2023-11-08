@@ -81,6 +81,9 @@ static const char *upvol[] = { "amixer", "-D", "default", "sset", "Master", "Pla
 static const char *downvol[] = { "amixer", "-D", "default", "sset", "Master", "Playback", "5%-", NULL };
 static const char *mutevol[] = { "amixer", "-D", "default", "sset", "Master", "Playback", "toggle", NULL };
 
+/* commands: mic capture control using amixer */
+static const char *mictoggle[] = { "amixer", "set", "Dmic0", "toggle", NULL };
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -127,6 +130,7 @@ static const Key keys[] = {
     { 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = downvol } },
 	{ 0,                            XF86XK_AudioMute,     spawn,          {.v = mutevol } },
 	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = upvol   } },
+	{ 0,                            XF86XK_AudioMicMute,    spawn,          {.v = mictoggle   } },
 };
 
 /* button definitions */
